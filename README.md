@@ -1,4 +1,4 @@
-ProcturU
+ProctorU
 =========
 
 A client library for the ProcturU API
