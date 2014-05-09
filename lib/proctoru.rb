@@ -1,36 +1,27 @@
 require 'httparty'
 require 'time'
 
+require 'proctoru/configuration'
+
 module Proctoru
 
   class << self
     attr_accessor :configuration
   end
 
-  def self.configure
-    self.configuration ||= Configuration.new
-    yield(configuration)
+  def self.configuration
+    @configuration ||= Configuration.new
   end
 
-  class Configuration
-    attr_accessor :api_key
-    attr_accessor :api_url
-
-    def initialize
-      @api_key = ""
-      @api_url = "https://apitest.proctoru.com/"
-    end
+  def self.configure
+    yield(configuration)
   end
 
   def self.getTimeZoneList
 
     time_stamp = Time.now.utc.iso8601
-    #auth_token = "api_key"
-    #url = "https://apitest.proctoru.com/getTimeZoneList?time_sent=#{time_stamp}"
-
-    #response = HTTParty.get(url, :headers => { "Authorization-Token" => auth_token})
-
-    puts "getTimeZoneList"
+    url = "#{Proctoru.configuration.api_url}getTimeZoneList?time_sent=#{time_stamp}"
+    response = HTTParty.get(url, :headers => { "Authorization-Token" => Proctoru.configuration.api_key})
 
   end
 
