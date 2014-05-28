@@ -20,5 +20,7 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
 
   s.add_dependency 'httparty', '~> 0.13.1', '>= 0.13.1'
+  s.add_development_dependency "pry"
   s.add_development_dependency "rspec"
+  s.add_development_dependency "dotenv"
 end
