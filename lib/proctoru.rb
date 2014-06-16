@@ -9,23 +9,18 @@ module Proctoru
     Time.now.utc.iso8601
   end
 
-  def self.getTimeZoneList
-    url = "#{Proctoru.configuration.api_url}getTimeZoneList?time_sent=#{timestamp}"
-    response = HTTParty.get(url, :headers => { "Authorization-Token" => Proctoru.configuration.api_key})
-  end
+  class << self
+    api_methods = %w( getTimeZoneList getEmailExist getScheduleInfoAvailableTimesList addAdHocProcess pendingExamReport )
+    api_methods.each do |method|
+      define_method(method) do |options = {}|
 
-  def self.getScheduleInfoAvailableTimesList(options)
-    options[:time_sent] = timestamp
-    
-    url = "#{Proctoru.configuration.api_url}getScheduleInfoAvailableTimesList"
-    response = HTTParty.post(url, :headers => { "Authorization-Token" => Proctoru.configuration.api_key}, :body => options)
-  end
+        options[:time_sent] = timestamp
+        url = "#{Proctoru.configuration.api_url}#{method}"
+        response = HTTParty.post(url, :headers => { "Authorization-Token" => Proctoru.configuration.api_key}, :body => options)
 
-  def self.addAdHocProcess(options)
-    options[:time_sent] = timestamp
-    
-    url = "#{Proctoru.configuration.api_url}addAdHocProcess"
-    response = HTTParty.post(url, :headers => { "Authorization-Token" => Proctoru.configuration.api_key}, :body => options)
+      end
+    end
+
   end
 
 end

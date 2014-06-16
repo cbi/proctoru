@@ -10,7 +10,7 @@ describe Proctoru do
   end
 
   its'gets time zones from api' do
-    expect(Proctoru.getTimeZoneList.to_s).to include("Central Time Zone")
+    expect(Proctoru.getTimeZoneList.body).to include("Central Time Zone")
   end
 
   it 'gets a list of available times' do
@@ -76,10 +76,28 @@ describe Proctoru do
     response = Proctoru.addAdHocProcess(options)
     expect(response.body).to include("data")
 
-    #binding.pry
+    parsed_response = JSON.parse(response.body)
+    expect(parsed_response['response_code']).to eq 1
 
-    #parsed_response = JSON.parse(response.body)
-    #expect(parsed_response['response_code']).to eq 1
+  end
+
+  it 'gets a list pending exams' do
+
+    options = {}
+
+    response = Proctoru.pendingExamReport(options)
+    expect(response['response_code']).to eq 1
+
+  end
+
+  it 'checks if an email exists in the system' do
+
+    options = {
+      :email => "joew@bitsmail.com"
+    }
+
+    response = Proctoru.getEmailExist(options)
+    expect(response['response_code']).to eq 1
 
   end
 
