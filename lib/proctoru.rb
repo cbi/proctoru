@@ -10,7 +10,7 @@ module Proctoru
   end
 
   class << self
-    api_methods = %w( getTimeZoneList getEmailExist getScheduleInfoAvailableTimesList addAdHocProcess pendingExamReport )
+    api_methods = %w( getTimeZoneList getEmailExist getScheduleInfoAvailableTimesList addAdHocProcess pendingExamReport autoLogin )
     api_methods.each do |method|
       define_method(method) do |options = {}|
 
@@ -20,7 +20,6 @@ module Proctoru
 
       end
     end
-
   end
 
 end
