@@ -81,6 +81,53 @@ describe Proctoru do
 
   end
 
+  it 'get a student TOS status' do
+
+    options = {
+      :time_sent => @time_stamp,
+      :student_id => "j@bitsmail.com"
+    }
+
+    response = Proctoru.getTOS(options)
+    expect(response.body).to include("data")
+
+    parsed_response = JSON.parse(response.body)
+    expect(parsed_response['response_code']).to eq 1
+  end
+
+  it 'will acccept the TOS for a student' do
+
+    options = {
+      :time_sent => @time_stamp,
+      :student_id => "j@bitsmail.com"
+    }
+
+    response = Proctoru.agreeToTOS(options)
+    expect(response.body).to include("data")
+
+    parsed_response = JSON.parse(response.body)
+    expect(parsed_response['response_code']).to eq 1
+  end
+
+  it 'will return the URL for autoLogin' do
+
+    options = {
+      :time_sent => @time_stamp,
+      :student_id => "j@bitsmail.com",
+      :last_name => "Wright",
+      :first_name => "Joe",
+      :email => "j@bitsmail.com",
+    }
+
+    response = Proctoru.autoLogin(options)
+    expect(response.body).to include("data")
+
+    parsed_response = JSON.parse(response.body)
+    expect(parsed_response['response_code']).to eq 1
+
+    binding.pry
+  end
+
   it 'gets a list pending exams' do
 
     options = {}
