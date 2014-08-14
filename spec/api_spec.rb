@@ -93,7 +93,6 @@ describe Proctoru do
 
     parsed_response = JSON.parse(response.body)
     expect(parsed_response['response_code']).to eq 1
-    binding.pry
   end
 
   it 'will acccept the TOS for a student' do
